@@ -5,16 +5,28 @@
  */
 package framePackage;
 
+import databasePackage.DataBaseController;
+import databasePackage.DataBaseEntity;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author vinic
  */
 public class DatabaseForm extends javax.swing.JFrame {
-
+    
+    private DataBaseController dataBaseController;
     /**
      * Creates new form databaseForm
      */
     public DatabaseForm() {
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
+    }
+    
+    public DatabaseForm(DataBaseController databaseController){
+        this.dataBaseController = databaseController;
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -50,6 +62,9 @@ public class DatabaseForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,9 +100,9 @@ public class DatabaseForm extends javax.swing.JFrame {
         jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setText("SAJ/PG");
-        jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jCheckBox1MousePressed(evt);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
             }
         });
 
@@ -95,36 +110,56 @@ public class DatabaseForm extends javax.swing.JFrame {
         jCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox2.setText("SAJ/SG");
-        jCheckBox2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jCheckBox2MousePressed(evt);
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
             }
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Tipo dos Bancos de Dados");
+        jLabel7.setText("Catálogo (Oracle/DB2) / Server (SQLSERVER)");
 
         jCheckBox3.setBackground(new java.awt.Color(71, 77, 91));
         jCheckBox3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox3.setText("SQLSERVER");
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
 
         jCheckBox4.setBackground(new java.awt.Color(71, 77, 91));
         jCheckBox4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox4.setText("ORACLE");
+        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox4ActionPerformed(evt);
+            }
+        });
 
         jCheckBox5.setBackground(new java.awt.Color(71, 77, 91));
         jCheckBox5.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jCheckBox5.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBox5.setText("DB2");
+        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox5ActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(71, 77, 91));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
 
@@ -139,6 +174,14 @@ public class DatabaseForm extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Limpar");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Tipo dos Bancos de Dados");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -147,46 +190,58 @@ public class DatabaseForm extends javax.swing.JFrame {
             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox2)
+                .addGap(62, 62, 62)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
                 .addGap(84, 84, 84))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox4, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox5, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                .addGap(27, 27, 27))
+                .addComponent(jCheckBox4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField2)
                             .addComponent(jTextField3)
+                            .addComponent(jTextField1)
                             .addComponent(jTextField4)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addComponent(jButton1)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton2)))
+                        .addComponent(jLabel8)
+                        .addGap(61, 61, 61)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(23, 23, 23))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBox1)
+                .addGap(26, 26, 26)
+                .addComponent(jCheckBox2)
+                .addGap(96, 96, 96))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,31 +264,37 @@ public class DatabaseForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addGap(8, 8, 8)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox3)
                     .addComponent(jCheckBox4)
                     .addComponent(jCheckBox5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addGap(21, 21, 21))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jCheckBox3, jCheckBox4, jCheckBox5});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jCheckBox3, jCheckBox4});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -243,47 +304,137 @@ public class DatabaseForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox1MousePressed
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (!(jCheckBox1.isSelected())) {
             this.disableSystemsComponents();
             return;
         } else {
-            this.enableSystemsComponents("SG");
+            this.enableSystemsComponents("PG");
             jCheckBox2.setEnabled(false);
         }
-    }//GEN-LAST:event_jCheckBox1MousePressed
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jCheckBox2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox2MousePressed
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         if (!(jCheckBox2.isSelected())) {
             this.disableSystemsComponents();
             return;
         } else {
-            this.enableSystemsComponents("PG");
+            this.enableSystemsComponents("SG");
             jCheckBox1.setEnabled(false);
         }
-    }//GEN-LAST:event_jCheckBox2MousePressed
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        if (!(jCheckBox3.isSelected())) {
+            this.disableSystemsComponentsDatabase();
+            return;
+        } else {
+            this.enableSystemsComponentsDatabase("SQLSERVER");
+            jCheckBox4.setEnabled(false);
+            jCheckBox5.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
+        if (!(jCheckBox4.isSelected())) {
+            this.disableSystemsComponentsDatabase();
+            return;
+        } else {
+            this.enableSystemsComponentsDatabase("ORACLE");
+            jCheckBox3.setEnabled(false);
+            jCheckBox5.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox4ActionPerformed
+
+    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
+        if (!(jCheckBox5.isSelected())) {
+            this.disableSystemsComponentsDatabase();
+            return;
+        } else {
+            this.enableSystemsComponentsDatabase("DB2");
+            jCheckBox4.setEnabled(false);
+            jCheckBox3.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBox5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String family = null;
+        if(jCheckBox1.isSelected()){
+            family = "PG5";
+        }
+        else if(jCheckBox2.isSelected()){
+            family = "SG5";
+        }
+        
+        String name = jTextField1.getText();
+        String mainAlias = jTextField2.getText();
+        String aliasNET = jTextField3.getText();
+        String aliasIND = jTextField4.getText();
+        
+        String type = null;
+        if(jCheckBox3.isSelected()){
+            type = "SQLSERVER";
+        }
+        else if(jCheckBox4.isSelected()){
+            type = "ORACLE";
+        }
+        else if(jCheckBox5.isSelected()){
+            type = "DB2";
+        }
+        
+        String serverOrAdress = jTextField5.getText();
+        try{
+            DataBaseEntity newDatabase = new DataBaseEntity(name, family, mainAlias, aliasNET, aliasIND, type, serverOrAdress);
+            this.dataBaseController.insertDatabase(newDatabase);
+            JOptionPane.showMessageDialog(null, "Base cadastrada com sucesso!", "Sucesso ...", JOptionPane.INFORMATION_MESSAGE);
+            this.clearScreen();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro", e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
-    private void disableSystemsComponents(){
+    private void clearScreen(){
+        jCheckBox1.setSelected(false);
+        jCheckBox1.setEnabled(true);
+        jCheckBox2.setSelected(false);
+        jCheckBox2.setEnabled(true);
+        jCheckBox3.setSelected(false);
+        jCheckBox3.setEnabled(true);
+        jCheckBox4.setSelected(false);
+        jCheckBox4.setEnabled(true);
+        jCheckBox5.setSelected(false);
+        jCheckBox5.setEnabled(true);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+    }
+    private void disableSystemsComponents() {
         this.jCheckBox1.setEnabled(true);
         this.jCheckBox2.setEnabled(true);
         this.jCheckBox1.setSelected(false);
-        this.jCheckBox2.setSelected(false);           
+        this.jCheckBox2.setSelected(false);
     }
-    
-    private void enableSystemsComponents(String family){
-        if(family == "SG"){
+
+    private void enableSystemsComponents(String family) {
+        if (family == "SG") {
             jCheckBox2.setEnabled(true);
-        }
-        else{
+        } else {
             jCheckBox1.setEnabled(true);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -335,6 +486,8 @@ public class DatabaseForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -342,5 +495,25 @@ public class DatabaseForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
+
+    private void disableSystemsComponentsDatabase() {
+        jCheckBox3.setEnabled(true);
+        jCheckBox4.setEnabled(true);
+        jCheckBox5.setEnabled(true);
+        jCheckBox3.setSelected(false);
+        jCheckBox4.setSelected(false);
+        jCheckBox5.setSelected(false);
+    }
+
+    private void enableSystemsComponentsDatabase(String type) {
+        if (type == "SQLSERVER") {
+            jCheckBox3.setEnabled(true);
+        } else if (type == "ORACLE") {
+            jCheckBox4.setEnabled(true);
+        } else {
+            jCheckBox5.setEnabled(true);
+        }
+    }
 }

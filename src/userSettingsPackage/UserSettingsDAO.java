@@ -78,7 +78,7 @@ public class UserSettingsDAO implements Serializable {
             oo.close();
             fis.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("Ainda não há bases cadastradas.");
+            System.out.println("Ainda não há configurações salvas.");
         } catch (IOException ex) {
             Logger.getLogger(UserSettingsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

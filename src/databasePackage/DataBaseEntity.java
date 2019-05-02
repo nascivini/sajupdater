@@ -5,21 +5,38 @@
  */
 package databasePackage;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Vinicius Nascimento
  */
-public class DataBaseEntity {
+public class DataBaseEntity implements Serializable{
+    
+    private String name;
     private String family;
     private String mainAlias;
     private String aliasNET;
     private String aliasIND;
+    private String type;
+    private String serverOrAdress;
 
-    public DataBaseEntity(String family, String mainAlias, String aliasNET, String aliasIND) {
+    public DataBaseEntity(String name, String family, String mainAlias, String aliasNET, String aliasIND, String type, String serverOrAdress) {
+        this.name = name;
         this.family = family;
         this.mainAlias = mainAlias;
         this.aliasNET = aliasNET;
         this.aliasIND = aliasIND;
+        this.type = type;
+        this.serverOrAdress = serverOrAdress;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getFamily() {
@@ -53,6 +70,24 @@ public class DataBaseEntity {
     public void setAliasIND(String aliasIND) {
         this.aliasIND = aliasIND;
     }
+
+    public String getServerOrAdress() {
+        return serverOrAdress;
+    }
+
+    public void setServerOrAdress(String serverOrAdress) {
+        this.serverOrAdress = serverOrAdress;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
     
+    
+
 }
