@@ -397,6 +397,7 @@ public class DatabaseForm extends javax.swing.JFrame {
             this.dataBaseController.insertDatabase(newDatabase);
             JOptionPane.showMessageDialog(null, "Base cadastrada com sucesso!", "Sucesso ...", JOptionPane.INFORMATION_MESSAGE);
             this.clearScreen();
+            this.dataBaseController.getMainController().homeScreen.getJTable1().setModel(dataBaseController.getMainController().getDataBaseController().getDatabases());
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, "Erro", e.getMessage(), JOptionPane.ERROR_MESSAGE);

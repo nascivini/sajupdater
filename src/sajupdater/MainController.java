@@ -9,9 +9,12 @@ import databasePackage.DataBaseController;
 import databasePackage.DataBaseEntity;
 import framePackage.Home;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ import userSettingsPackage.UserSettingsEntity;
  */
 public class MainController {
 
-    private Home homeScreen;
+    public Home homeScreen;
     private DataBaseController dataBaseController;
     private UserSettingsController userSettingsController;
     private int lengthOfActualTransfer;
@@ -209,7 +212,7 @@ public class MainController {
                     break;
             }
         }
-        JOptionPane.showMessageDialog(null, "Cópia dos arquivos da versão " + version + " finalizada.", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Cópia dos arquivos da versão " + version + " finalizada.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         homeScreen.getjLabel45().setText("Aguardando ...");
 
     }
@@ -230,7 +233,22 @@ public class MainController {
     }
 
     private void copyFileUsingStream(File source, File dest) throws IOException {
-        Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        FileChannel sourceChannel = null;
+        FileChannel destinationChannel = null;
+
+        try {
+            sourceChannel = new FileInputStream(source).getChannel();
+            destinationChannel = new FileOutputStream(dest).getChannel();
+            sourceChannel.transferTo(0, sourceChannel.size(),
+                    destinationChannel);
+        } finally {
+            if (sourceChannel != null && sourceChannel.isOpen()) {
+                sourceChannel.close();
+            }
+            if (destinationChannel != null && destinationChannel.isOpen()) {
+                destinationChannel.close();
+            }
+        }
     }
 
     public int getLengthOfActualTransfer() {
@@ -283,15 +301,15 @@ public class MainController {
                 ini.store();
             }
             return "Dados Atualizados!";
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             return ex.getMessage();
         }
     }
 
-    public String updateIntegrationIni(String aliasPG, String aliasSG) {
-        DataBaseEntity PG = this.getDataBaseController().findDatabase(aliasPG);
-        DataBaseEntity SG = this.getDataBaseController().findDatabase(aliasSG);
+    public String updateIntegrationIni(String aliasPG, String serverPG, String aliasSG, String serverSG) {
+        DataBaseEntity PG = this.getDataBaseController().findDatabase(aliasPG, serverPG);
+        DataBaseEntity SG = this.getDataBaseController().findDatabase(aliasSG, serverSG);
         int indexPG = this.getDataBaseController().getIndexOfDatabase(PG);
         int indexSG = this.getDataBaseController().getIndexOfDatabase(SG);
         String result = "Os dados relativos aos inis dos servidores (Database) foram atualizados com sucesso.";

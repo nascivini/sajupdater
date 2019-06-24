@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
+import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import sajupdater.CopyThread;
 import sajupdater.MainController;
@@ -182,6 +183,7 @@ public class Home extends javax.swing.JFrame {
         jLabel39 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1264,12 +1266,12 @@ public class Home extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Versão 1.0");
+        jLabel15.setText("Versão 1.1");
 
         jLabel38.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(255, 255, 255));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("01/02/2019");
+        jLabel38.setText("11/06/2019");
 
         jPanel15.setBackground(new java.awt.Color(45, 115, 115));
         jPanel15.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1288,6 +1290,11 @@ public class Home extends javax.swing.JFrame {
         jLabel44.setForeground(new java.awt.Color(255, 255, 255));
         jLabel44.setText("Gerenciador de Servidores");
         jPanel15.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 11, 170, 32));
+
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel51.setText("Em Desenvolvimento");
+        jPanel15.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 80, 20));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1404,6 +1411,7 @@ public class Home extends javax.swing.JFrame {
         jPanel3.setBackground(new Color(45, 115, 115));
         jPanel15.setBackground(new Color(45, 115, 115));
         jPanel12.setVisible(false);
+        jPanel16.setVisible(false);
         jPanel13.setVisible(false);
         jPanel14.setVisible(false);
         jPanel8.setVisible(true);
@@ -1469,7 +1477,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox8ActionPerformed
 
     private void jPanel15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel15MousePressed
-        jPanel15.setBackground(new Color(45, 115, 180));
+        /*jPanel15.setBackground(new Color(45, 115, 180));
         jPanel5.setBackground(new Color(45, 115, 115));
         jPanel6.setBackground(new Color(45, 115, 115));
         jPanel4.setBackground(new Color(45, 115, 115));
@@ -1479,6 +1487,7 @@ public class Home extends javax.swing.JFrame {
         jPanel13.setVisible(false);
         jPanel12.setVisible(false);
         jPanel14.setVisible(false);
+        */
     }//GEN-LAST:event_jPanel15MousePressed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1527,6 +1536,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try{
         ArrayList<String> copyOperations = new ArrayList<String>();
         if (jCheckBox1.isSelected()) {
             copyOperations.add("PG5");
@@ -1551,6 +1561,10 @@ public class Home extends javax.swing.JFrame {
         CopyThread thread = new CopyThread(mainController, jTextField1.getText(), copyOperations);
         this.copyThread = thread;
         jButton1.setEnabled(true);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro no reinício dos serviços.", "Erro", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public JButton getjButton1() {
@@ -1602,14 +1616,19 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String aliasPG = String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 2));
+        String serverPG = String.valueOf(jTable2.getValueAt(jTable2.getSelectedRow(), 1));
         String aliasSG = String.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 2));
+        String serverSG = String.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 1));
+        
         String result = "Os dados do balanceador alternativo foram atualizados com sucesso.";
+        
         try {
             this.mainController.updateBalancer(jTextField2.getText(), aliasPG, aliasSG);
         } catch (Exception e) {
             result = "Os dados do balanceador alternativo não puderam ser atualizados devido ao erro: " + e.getMessage();
         }
-        result = result + "\n" + this.getMainController().updateIntegrationIni(aliasPG, aliasSG);
+        
+        result = result + "\n" + this.getMainController().updateIntegrationIni(aliasPG, serverPG, aliasSG, serverSG);
         JOptionPane.showMessageDialog(null, result, "Aviso", JOptionPane.INFORMATION_MESSAGE);
         jTextField2.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -1714,7 +1733,10 @@ public class Home extends javax.swing.JFrame {
     public JProgressBar getjProgressBar1() {
         return jProgressBar1;
     }
-
+    
+    public JTable getJTable1(){
+        return jTable1;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -1792,6 +1814,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;

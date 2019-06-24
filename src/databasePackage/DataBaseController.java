@@ -95,11 +95,12 @@ public class DataBaseController {
         return this.cacheDatabases.get(index);
     }
     
-    public DataBaseEntity findDatabase(String mainAlias){
+    public DataBaseEntity findDatabase(String mainAlias, String server){
         DataBaseEntity back = null;
         for (DataBaseEntity database : cacheDatabases){
-            if(database.getMainAlias().equals(mainAlias)){
+            if(database.getMainAlias().equals(mainAlias) && database.getServerOrAdress().equals(server)){
                 back = database;
+                break;
             }
         }
         return back;
